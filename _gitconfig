@@ -1,0 +1,7 @@
+[user]
+	email = hikaru.ccm1023@gmail.com
+	name = ibayashi-hikaru
+[alias]
+	graph=log --graph --oneline --decorate=full
+[core]
+	excludesfile = /home/hibayashi/.gitignore_global

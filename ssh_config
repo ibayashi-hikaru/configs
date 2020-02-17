@@ -1,0 +1,57 @@
+Host pony
+  Hostname www-ui.is.s.u-tokyo.ac.jp
+  IdentityFile ~/.ssh/id_rsa
+  User ibayashi
+  Port 7722
+Host ist
+	HostName login.ist.ac.at
+	Port 22
+	User hibayash
+Host shiokaze
+	HostName 10.1.40.24
+	Port 22
+	User hikaru
+	ProxyCommand ssh -W shiokaze:22 ist
+Host soyokaze
+	HostName 10.1.40.25
+	Port 22
+	User hikaru
+	ProxyCommand ssh -W soyokaze:22 ist
+Host bigsplash
+	HostName 10.36.21.158
+	Port 22
+	User hibayash
+	ProxyCommand ssh -W bigsplash:22 ist
+Host aws
+	HostName ec2-34-223-238-14.us-west-2.compute.amazonaws.com
+	Port 22
+	User ec2-user
+	IdentityFile ~/.ssh/ibayashiTestKey.pem
+Host namikaze
+	HostName namikaze.rall.nii.ac.jp
+	Port 22
+	User hikaru
+Host harukaze
+	HostName harukaze.rall.nii.ac.jp
+	Port 22
+	User hikaru
+Host usc
+	HostName aludra.usc.edu
+	Port 22
+	User ibayashi
+Host mind1
+	HostName minds01.isi.edu
+	Port 22
+	User ibayashi
+Host mind3
+	HostName minds03.isi.edu
+	Port 22
+	User ibayashi
+Host mind4
+	HostName minds04.isi.edu
+	Port 22
+	User ibayashi
+Host hpc
+	HostName hpc-login3.usc.edu
+	Port 22
+	User ibayashi
