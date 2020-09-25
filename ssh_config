@@ -52,6 +52,14 @@ Host mind4
 	Port 22
 	User ibayashi
 Host hpc
-	HostName hpc-login3.usc.edu
+	HostName hpc-login2.usc.edu
+	Port 22
+	User ibayashi
+Host carc
+	HostName discovery.usc.edu
+	Port 22
+	User ibayashi
+Host ima 
+	HostName 157.82.29.62
 	Port 22
 	User ibayashi
