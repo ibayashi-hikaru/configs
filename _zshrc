@@ -10,7 +10,7 @@ plugins=(git)
 
 # User configuration
 
-export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/git/bin:/usr/texbin:/opt/local/bin:/opt/local/sbin:/usr/local:/usr/local/Cellar/eigen/3.2.5/include/eigen3:/usr/local/include:/usr/local/texlive/2015/bin/x86_64-darwin:/Users/ibayashi/shell_scripts"
+export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/git/bin:/usr/texbin:/opt/local/bin:/opt/local/sbin:/usr/local:/usr/local/Cellar/eigen/3.2.5/include/eigen3:/usr/local/include:/usr/local/texlive/2015/bin/x86_64-darwin:/Users/ibayashi/shell_scripts:/usr/local/texlive/2021/bin/universal-darwin"
 # export MANPATH="/usr/local/man:$MANPATH"
 source $ZSH/oh-my-zsh.sh
 
@@ -42,6 +42,30 @@ alias mc="make clean"
 alias o="open"
 alias vps="globalprotect connect --portal mdr-vpn.ads.isi.edu"  
 alias vpsd="globalprotect disconnect"
+alias brew="arch -x86_64 brew"
 source $HOME/configs/myShellConfig.sh
-export PATH="/Users/hibayashi/anaconda3/bin:$PATH" 
+# export PATH="/Users/hikaruibayashi/anaconda3/bin:$PATH"  # commented out by conda initialize 
+export PATH="/usr/local/opt/python@3.9/bin:$PATH" 
 export PATH="/Applications/Postgres.app/Contents/Versions/latest/bin:$PATH" 
+
+# opam configuration
+test -r /Users/hibayashi/.opam/opam-init/init.zsh && . /Users/hibayashi/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
+# arch -x86_64 brew install
+
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/Users/hikaruibayashi/opt/anaconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/Users/hikaruibayashi/opt/anaconda3/etc/profile.d/conda.sh" ]; then
+        . "/Users/hikaruibayashi/opt/anaconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/Users/hikaruibayashi/opt/anaconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+
+source ~/Projects/mitsuba2/setpath.sh
