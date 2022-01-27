@@ -26,6 +26,7 @@ NeoBundle 'hotwatermorning/auto-git-diff'
 NeoBundle 'tomtom/tcomment_vim'
 NeoBundle 'Shougo/vimproc'
 NeoBundle 'octol/vim-cpp-enhanced-highlight'
+NeoBundle 'pseewald/vim-anyfold'
 " vimrc に記述されたプラグインでインストールされていないものがないかチェックする
 NeoBundleCheck
 call neobundle#end()
