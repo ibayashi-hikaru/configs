@@ -65,3 +65,4 @@ cmap <f29> <nop>
 set expandtab
 colorscheme molokai
 set noswapfile
+command! W  write
