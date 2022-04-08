@@ -36,7 +36,7 @@ Host harukaze
 	Port 22
 	User hikaru
 Host usc
-	HostName aludra.usc.edu
+	HostName viterbi-scf1.usc.edu
 	Port 22
 	User ibayashi
 Host mind1
@@ -56,7 +56,7 @@ Host hpc
 	Port 22
 	User ibayashi
 Host carc
-	HostName discovery2.usc.edu
+	HostName discovery1.usc.edu
 	Port 22
 	User ibayashi
 Host ima 

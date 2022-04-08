@@ -1,7 +1,12 @@
 [user]
-	email = hikaru.ccm1023@gmail.com
-	name = ibayashi-hikaru
+	email = ibayashi@usc.edu
+	name = Ibayashi Hikaru
 [alias]
 	graph=log --graph --oneline --decorate=full
 [core]
 	excludesfile = /home/hibayashi/.gitignore_global
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
