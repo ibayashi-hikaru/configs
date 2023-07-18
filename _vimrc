@@ -1,42 +1,48 @@
-" neobundle settings {{{
-if has('vim_starting')
+" dein.vim settings
+if &compatible
   set nocompatible
-  " neobundle をインストールしていない場合は自動インストール
-  if !isdirectory(expand("~/.vim/bundle/neobundle.vim/"))
-    echo "install neobundle..."
-    " vim からコマンド呼び出しているだけ neobundle.vim のクローン
-    :call system("git clone git://github.com/Shougo/neobundle.vim ~/.vim/bundle/neobundle.vim")
-  endif
-  " runtimepath の追加は必須
-  set runtimepath+=~/.vim/bundle/neobundle.vim/
 endif
-call neobundle#begin(expand('~/.vim/bundle'))
-let g:neobundle_default_git_protocol='https'
 
-" neobundle#begin - neobundle#end の間に導入するプラグインを記載します。
-" インデントに色を付けて見やすくする
+let s:dein_dir = expand('~/.cache/dein')
+let s:repos_dir = s:dein_dir . '/repos/github.com'
 
-" vimを立ち上げたときに、自動的にvim-indent-guidesをオンにする
-" let g:indent_guides_enable_on_vim_startup = 1
-"
-NeoBundleFetch 'Shougo/neobundle.vim'
-NeoBundle 'Townk/vim-autoclose'
-NeoBundle 'scrooloose/nerdtree'
-NeoBundle 'hotwatermorning/auto-git-diff'
-NeoBundle 'tomtom/tcomment_vim'
-NeoBundle 'Shougo/vimproc'
-NeoBundle 'octol/vim-cpp-enhanced-highlight'
-NeoBundle 'pseewald/vim-anyfold'
-" vimrc に記述されたプラグインでインストールされていないものがないかチェックする
-NeoBundleCheck
-call neobundle#end()
+if &runtimepath !~# '/dein.vim'
+  if !isdirectory(s:repos_dir . '/Shougo/dein.vim')
+    call system('git clone https://github.com/Shougo/dein.vim '
+          \ . s:repos_dir . '/Shougo/dein.vim')
+  endif
+  execute 'set runtimepath^=' . s:repos_dir . '/Shougo/dein.vim'
+endif
+
+if dein#load_state(s:dein_dir)
+  call dein#begin(s:dein_dir)
+
+  " Add or remove your plugins here like this:
+  call dein#add('Shougo/dein.vim')
+  call dein#add('Townk/vim-autoclose')
+  call dein#add('scrooloose/nerdtree')
+  call dein#add('hotwatermorning/auto-git-diff')
+  call dein#add('tomtom/tcomment_vim')
+  call dein#add('Shougo/vimproc')
+  call dein#add('octol/vim-cpp-enhanced-highlight')
+  call dein#add('pseewald/vim-anyfold')
+
+  call dein#end()
+  call dein#save_state()
+endif
+
+if dein#check_install()
+  call dein#install()
+endif
+
 filetype plugin indent on
+syntax enable
 set t_Co=256
-syntax on
+
+" Your other Vim settings
 set tabstop=4
 set shiftwidth=4
 set autoindent
-" 行数表示
 set encoding=utf-8
 set number
 set clipboard=unnamed
