@@ -1,6 +1,6 @@
 [user]
-	email = ibayashi@usc.edu
-	name = Ibayashi Hikaru
+	email = hikaru.ccm1023@gmail.com
+	name = Hikaru Ibayashi
 [alias]
 	graph=log --graph --oneline --decorate=full
 [core]

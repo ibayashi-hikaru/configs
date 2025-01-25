@@ -4,62 +4,92 @@ Host pony
   User ibayashi
   Port 7722
 Host ist
-	HostName login.ist.ac.at
-	Port 22
-	User hibayash
+    HostName login.ist.ac.at
+    Port 22
+    User hibayash
 Host shiokaze
-	HostName 10.1.40.24
-	Port 22
-	User hikaru
-	ProxyCommand ssh -W shiokaze:22 ist
+    HostName 10.1.40.24
+    Port 22
+    User hikaru
+    ProxyCommand ssh -W shiokaze:22 ist
 Host soyokaze
-	HostName 10.1.40.25
-	Port 22
-	User hikaru
-	ProxyCommand ssh -W soyokaze:22 ist
+    HostName 10.1.40.25
+    Port 22
+    User hikaru
+    ProxyCommand ssh -W soyokaze:22 ist
 Host bigsplash
-	HostName 10.36.21.158
-	Port 22
-	User hibayash
-	ProxyCommand ssh -W bigsplash:22 ist
+    HostName 10.36.21.158
+    Port 22
+    User hibayash
+    ProxyCommand ssh -W bigsplash:22 ist
 Host aws
-	HostName ec2-34-223-238-14.us-west-2.compute.amazonaws.com
-	Port 22
-	User ec2-user
-	IdentityFile ~/.ssh/ibayashiTestKey.pem
+    HostName ec2-34-223-238-14.us-west-2.compute.amazonaws.com
+    Port 22
+    User ec2-user
+    IdentityFile ~/.ssh/ibayashiTestKey.pem
 Host namikaze
-	HostName namikaze.rall.nii.ac.jp
-	Port 22
-	User hikaru
+    HostName namikaze.rall.nii.ac.jp
+    Port 22
+    User hikaru
 Host harukaze
-	HostName harukaze.rall.nii.ac.jp
-	Port 22
-	User hikaru
+    HostName harukaze.rall.nii.ac.jp
+    Port 22
+    User hikaru
 Host usc
-	HostName viterbi-scf1.usc.edu
-	Port 22
-	User ibayashi
+    HostName viterbi-scf1.usc.edu
+    Port 22
+    User ibayashi
 Host mind1
-	HostName minds01.isi.edu
-	Port 22
-	User ibayashi
+    HostName minds01.isi.edu
+    Port 22
+    User ibayashi
 Host mind3
-	HostName minds03.isi.edu
-	Port 22
-	User ibayashi
+    HostName minds03.isi.edu
+    Port 22
+    User ibayashi
 Host mind4
-	HostName minds04.isi.edu
-	Port 22
-	User ibayashi
+    HostName minds04.isi.edu
+    Port 22
+    User ibayashi
 Host hpc
-	HostName hpc-login2.usc.edu
-	Port 22
-	User ibayashi
-Host carc
-	HostName discovery1.usc.edu
-	Port 22
-	User ibayashi
+    HostName hpc-login2.usc.edu
+    Port 22
+    User ibayashi
+Host carc1
+    HostName discovery1.usc.edu
+    Port 22
+    User ibayashi
+Host carc2
+    HostName discovery2.usc.edu
+    Port 22
+    User ibayashi
 Host ima 
-	HostName 157.82.29.62
-	Port 22
-	User ibayashi
+    HostName 157.82.29.62
+    Port 22
+    User ibayashi
+
+Host github.com-cepton
+    HostName github.com
+    User git
+    IdentityFile ~/.ssh/id_rsa_cepton
+    IdentitiesOnly yes
+
+Host cepton_desk
+    HostName 10.11.155.18
+    Port 22
+    User hibayashi
+
+Host blue_host
+    HostName 50.87.170.151
+    Port 22
+    User ozzpbvmy
+ 
+Host pomo
+    HostName 35.247.52.197
+    Port 22
+    User hikaruibayashi
+
+Host potter
+    HostName 35.229.121.152
+    Port 22
+    User hikaruibayashi
