@@ -92,4 +92,16 @@ if [ -f '/Users/hikaruibayashi/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/
 if [ -f '/Users/hikaruibayashi/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/hikaruibayashi/google-cloud-sdk/completion.zsh.inc'; fi
 
 [ -f "/Users/hikaruibayashi/.ghcup/env" ] && source "/Users/hikaruibayashi/.ghcup/env" # ghcup-env
-conda activate bayes
+alias python="python3"
+alias pip="pip3"
+source ~/myenv/bin/activate
+export KAGGLE_USERNAME=ibayashihikaru
+export KAGGLE_KEY=3bc640a118aa7e4591362765ad374f0e
+export PATH="/usr/local/texlive/2024/bin/universal-darwin:$PATH"
+dump_zsh_state() {
+    # Dump current zsh state for Cursor integration
+    echo "ZSH_VERSION=$ZSH_VERSION"
+    echo "PWD=$PWD"
+    echo "PATH=$PATH"
+    echo "SHELL=$SHELL"
+}
