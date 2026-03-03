@@ -1,3 +1,5 @@
+Include ~/.ssh/config.local
+
 Host pony
   Hostname www-ui.is.s.u-tokyo.ac.jp
   IdentityFile ~/.ssh/id_rsa

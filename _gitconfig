@@ -4,7 +4,9 @@
 [alias]
 	graph=log --graph --oneline --decorate=full
 [core]
-	excludesfile = /home/hibayashi/.gitignore_global
+	excludesfile = ~/.gitignore_global
+[include]
+	path = ~/.gitconfig.local
 [filter "lfs"]
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f

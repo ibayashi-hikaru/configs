@@ -1,1 +1,7 @@
+# macOS metadata
+.DS_Store
+**/.DS_Store
+
+# Local-only overrides (keep per machine)
 myShellConfig.sh
+_zshrc-e
