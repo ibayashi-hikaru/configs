@@ -22,12 +22,14 @@ cd ~/configs
 - `~/.oh-my-zsh` が無ければ clone
 - `myShellConfig.sh` が無ければ `myShellConfig.example.sh` から作成
 - AI系CLI導入（`claude`, `codex`）
+- `zsh` が使える場合、ログインシェルを `zsh` に変更（再ログインで反映）
 
 必要ならスキップ可能です。
 
 ```bash
 ./setup.sh --without-ai-tools
 ./setup.sh --skip-system-packages
+./setup.sh --skip-change-shell
 ```
 
 `install_ai_tools.sh` 単体実行もできます。
