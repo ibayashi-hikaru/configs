@@ -1,0 +1,8 @@
+# Keep machine-specific SSH settings here.
+# This file is read via: Include ~/.ssh/config.local
+
+# Example:
+# Host my-lab-host
+#   HostName 10.0.0.12
+#   User your-user
+#   IdentityFile ~/.ssh/id_ed25519

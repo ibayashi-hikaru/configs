@@ -1,0 +1,10 @@
+# Copy to ~/.gitconfig.local
+# Keep machine-specific git settings here.
+
+# Example:
+# [credential]
+# 	helper = osxkeychain
+
+# Example:
+# [user]
+# 	email = your-work-account@example.com
