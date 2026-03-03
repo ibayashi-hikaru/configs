@@ -33,7 +33,20 @@ run_privileged() {
 install_packages_linux() {
   if have_cmd apt-get; then
     run_privileged apt-get update
-    run_privileged apt-get install -y git curl zsh vim tmux openssh-client ca-certificates nodejs npm
+    run_privileged apt-get install -y git curl zsh vim tmux openssh-client ca-certificates
+
+    # NodeSource nodejs can conflict with apt's npm package.
+    if ! have_cmd node; then
+      if ! run_privileged apt-get install -y nodejs; then
+        log "Could not install nodejs automatically"
+      fi
+    fi
+
+    if ! have_cmd npm; then
+      if ! run_privileged apt-get install -y npm; then
+        log "Could not install npm via apt (possible nodejs/npm package conflict)"
+      fi
+    fi
     return
   fi
 
