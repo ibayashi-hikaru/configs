@@ -3,10 +3,85 @@ set -euo pipefail
 
 REPO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 TIMESTAMP="$(date +%Y%m%d-%H%M%S)"
-WITH_AI_TOOLS=0
+WITH_AI_TOOLS=1
+INSTALL_SYSTEM_PACKAGES=1
 
 log() {
   printf '[setup] %s\n' "$*"
+}
+
+die() {
+  printf '[setup] ERROR: %s\n' "$*" >&2
+  exit 1
+}
+
+have_cmd() {
+  command -v "$1" >/dev/null 2>&1
+}
+
+run_privileged() {
+  if [[ "$(id -u)" -eq 0 ]]; then
+    "$@"
+  elif have_cmd sudo; then
+    sudo "$@"
+  else
+    die "Need root privileges for: $* (sudo not found)"
+  fi
+}
+
+install_packages_linux() {
+  if have_cmd apt-get; then
+    run_privileged apt-get update
+    run_privileged apt-get install -y git curl zsh vim tmux openssh-client ca-certificates nodejs npm
+    return
+  fi
+
+  if have_cmd dnf; then
+    run_privileged dnf install -y git curl zsh vim tmux openssh-clients ca-certificates nodejs npm
+    return
+  fi
+
+  if have_cmd yum; then
+    run_privileged yum install -y git curl zsh vim tmux openssh-clients ca-certificates nodejs npm
+    return
+  fi
+
+  if have_cmd pacman; then
+    run_privileged pacman -Sy --noconfirm git curl zsh vim tmux openssh ca-certificates nodejs npm
+    return
+  fi
+
+  if have_cmd zypper; then
+    run_privileged zypper --non-interactive install git curl zsh vim tmux openssh ca-certificates nodejs20 npm20 || \
+      run_privileged zypper --non-interactive install git curl zsh vim tmux openssh ca-certificates nodejs npm
+    return
+  fi
+
+  die "Unsupported Linux package manager. Install git/curl/zsh/vim/tmux/node/npm manually."
+}
+
+install_packages_macos() {
+  if ! have_cmd brew; then
+    log "Homebrew not found. Skip package installation on macOS."
+    log "Install manually: git curl zsh vim tmux node"
+    return
+  fi
+
+  brew install git curl zsh vim tmux node
+}
+
+install_system_packages() {
+  case "$(uname -s)" in
+    Linux)
+      install_packages_linux
+      ;;
+    Darwin)
+      install_packages_macos
+      ;;
+    *)
+      die "Unsupported OS. This setup targets macOS/Linux."
+      ;;
+  esac
 }
 
 backup_if_exists() {
@@ -60,12 +135,15 @@ ensure_default_shell_note() {
 main() {
   while (($#)); do
     case "$1" in
-      --with-ai-tools)
-        WITH_AI_TOOLS=1
+      --without-ai-tools)
+        WITH_AI_TOOLS=0
+        ;;
+      --skip-system-packages)
+        INSTALL_SYSTEM_PACKAGES=0
         ;;
       *)
         log "Unknown option: $1"
-        log "Usage: ./setup.sh [--with-ai-tools]"
+        log "Usage: ./setup.sh [--without-ai-tools] [--skip-system-packages]"
         exit 1
         ;;
     esac
@@ -80,6 +158,13 @@ main() {
       exit 1
       ;;
   esac
+
+  if [[ "$INSTALL_SYSTEM_PACKAGES" -eq 1 ]]; then
+    log "Installing base packages (git/curl/zsh/vim/tmux/node/npm)"
+    install_system_packages
+  else
+    log "Skipping system package installation"
+  fi
 
   install_oh_my_zsh
 
@@ -111,7 +196,11 @@ main() {
   fi
 
   if [[ "$WITH_AI_TOOLS" -eq 1 ]]; then
-    "$REPO_DIR/install_ai_tools.sh"
+    if ! "$REPO_DIR/install_ai_tools.sh"; then
+      log "AI CLI installation failed; continue setup. Re-run: $REPO_DIR/install_ai_tools.sh"
+    fi
+  else
+    log "Skipping AI CLI installation"
   fi
 
   ensure_default_shell_note

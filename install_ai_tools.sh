@@ -14,6 +14,21 @@ need_cmd() {
   command -v "$1" >/dev/null 2>&1 || die "Required command not found: $1"
 }
 
+ensure_writable_npm_prefix() {
+  local npm_prefix
+  npm_prefix="$(npm config get prefix 2>/dev/null || true)"
+
+  if [[ -n "$npm_prefix" && -d "$npm_prefix" && -w "$npm_prefix" ]]; then
+    return
+  fi
+
+  local user_prefix="$HOME/.npm-global"
+  mkdir -p "$user_prefix"
+  npm config set prefix "$user_prefix"
+  log "Configured user npm prefix: $user_prefix"
+  log "Add this to PATH if needed: $user_prefix/bin"
+}
+
 check_node_version() {
   local node_major
   node_major="$(node -p "process.versions.node.split('.')[0]")"
@@ -47,6 +62,7 @@ main() {
   need_cmd node
   need_cmd npm
   check_node_version
+  ensure_writable_npm_prefix
 
   # Official npm packages:
   # - Claude Code: @anthropic-ai/claude-code

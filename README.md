@@ -14,26 +14,29 @@ cd ~/configs
 ./setup.sh
 ```
 
-`setup.sh` が以下を行います。
+デフォルトで以下を行います。
 
+- ベースパッケージ導入（`git`, `curl`, `zsh`, `vim`, `tmux`, `node`, `npm`）
 - `~/.zshrc`, `~/.gitconfig`, `~/.tmux.conf`, `~/.vimrc`, `~/.ssh/config` をこのリポジトリへシンボリックリンク
 - 既存ファイルがあれば `*.backup.YYYYmmdd-HHMMSS` に退避
 - `~/.oh-my-zsh` が無ければ clone
 - `myShellConfig.sh` が無ければ `myShellConfig.example.sh` から作成
+- AI系CLI導入（`claude`, `codex`）
 
-AI系CLIも一緒に入れる場合:
+必要ならスキップ可能です。
 
 ```bash
-./setup.sh --with-ai-tools
+./setup.sh --without-ai-tools
+./setup.sh --skip-system-packages
 ```
 
-または個別実行:
+`install_ai_tools.sh` 単体実行もできます。
 
 ```bash
 ./install_ai_tools.sh
 ```
 
-`install_ai_tools.sh` は `node` / `npm`（Node.js 18+）が前提です。
+AI系CLI導入には Node.js 18+ が必要です。
 
 ## ローカル専用ファイル
 
