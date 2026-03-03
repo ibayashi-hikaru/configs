@@ -5,6 +5,7 @@ REPO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 TIMESTAMP="$(date +%Y%m%d-%H%M%S)"
 WITH_AI_TOOLS=1
 INSTALL_SYSTEM_PACKAGES=1
+CHANGE_DEFAULT_SHELL=1
 
 log() {
   printf '[setup] %s\n' "$*"
@@ -84,6 +85,20 @@ install_system_packages() {
   esac
 }
 
+current_login_shell() {
+  if have_cmd getent; then
+    getent passwd "$USER" | cut -d: -f7
+    return
+  fi
+
+  if [[ "$(uname -s)" == "Darwin" ]] && have_cmd dscl; then
+    dscl . -read "/Users/$USER" UserShell 2>/dev/null | awk '{print $2}'
+    return
+  fi
+
+  printf '%s\n' "${SHELL:-}"
+}
+
 backup_if_exists() {
   local target="$1"
   if [[ -e "$target" || -L "$target" ]]; then
@@ -127,8 +142,34 @@ ensure_default_shell_note() {
     return
   fi
 
-  if [[ "${SHELL:-}" != "$zsh_path" ]]; then
-    log "Tip: change default shell with: chsh -s $zsh_path"
+  local login_shell
+  login_shell="$(current_login_shell)"
+
+  if [[ "$login_shell" == "$zsh_path" ]]; then
+    log "Default shell already set to zsh ($zsh_path)"
+    return
+  fi
+
+  if [[ "$(uname -s)" == "Linux" ]] && [[ -f "/etc/shells" ]]; then
+    if ! grep -Fx "$zsh_path" /etc/shells >/dev/null 2>&1; then
+      if run_privileged tee -a /etc/shells >/dev/null <<<"$zsh_path"; then
+        log "Added zsh to /etc/shells: $zsh_path"
+      else
+        log "Could not add zsh to /etc/shells automatically"
+      fi
+    fi
+  fi
+
+  if have_cmd chsh && chsh -s "$zsh_path" "$USER"; then
+    log "Default shell changed to: $zsh_path (re-login required)"
+    return
+  fi
+
+  if have_cmd chsh && run_privileged chsh -s "$zsh_path" "$USER"; then
+    log "Default shell changed to: $zsh_path (re-login required)"
+  else
+    log "Could not change default shell automatically"
+    log "Run manually: chsh -s $zsh_path"
   fi
 }
 
@@ -141,9 +182,12 @@ main() {
       --skip-system-packages)
         INSTALL_SYSTEM_PACKAGES=0
         ;;
+      --skip-change-shell)
+        CHANGE_DEFAULT_SHELL=0
+        ;;
       *)
         log "Unknown option: $1"
-        log "Usage: ./setup.sh [--without-ai-tools] [--skip-system-packages]"
+        log "Usage: ./setup.sh [--without-ai-tools] [--skip-system-packages] [--skip-change-shell]"
         exit 1
         ;;
     esac
@@ -203,7 +247,11 @@ main() {
     log "Skipping AI CLI installation"
   fi
 
-  ensure_default_shell_note
+  if [[ "$CHANGE_DEFAULT_SHELL" -eq 1 ]]; then
+    ensure_default_shell_note
+  else
+    log "Skipping default shell change"
+  fi
   log "Done"
 }
 
