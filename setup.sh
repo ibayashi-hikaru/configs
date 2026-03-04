@@ -6,6 +6,7 @@ TIMESTAMP="$(date +%Y%m%d-%H%M%S)"
 WITH_AI_TOOLS=1
 INSTALL_SYSTEM_PACKAGES=1
 CHANGE_DEFAULT_SHELL=1
+SETUP_GITHUB_SSH=1
 
 log() {
   printf '[setup] %s\n' "$*"
@@ -198,9 +199,12 @@ main() {
       --skip-change-shell)
         CHANGE_DEFAULT_SHELL=0
         ;;
+      --skip-github-ssh)
+        SETUP_GITHUB_SSH=0
+        ;;
       *)
         log "Unknown option: $1"
-        log "Usage: ./setup.sh [--without-ai-tools] [--skip-system-packages] [--skip-change-shell]"
+        log "Usage: ./setup.sh [--without-ai-tools] [--skip-system-packages] [--skip-change-shell] [--skip-github-ssh]"
         exit 1
         ;;
     esac
@@ -258,6 +262,18 @@ main() {
     fi
   else
     log "Skipping AI CLI installation"
+  fi
+
+  if [[ "$SETUP_GITHUB_SSH" -eq 1 ]]; then
+    if [[ -x "$REPO_DIR/setup_github_ssh.sh" ]]; then
+      if ! "$REPO_DIR/setup_github_ssh.sh"; then
+        log "GitHub/SSH setup failed; continue setup. Re-run: $REPO_DIR/setup_github_ssh.sh"
+      fi
+    else
+      log "setup_github_ssh.sh not found or not executable; skip GitHub/SSH setup"
+    fi
+  else
+    log "Skipping GitHub/SSH setup"
   fi
 
   if [[ "$CHANGE_DEFAULT_SHELL" -eq 1 ]]; then
