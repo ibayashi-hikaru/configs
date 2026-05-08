@@ -1,0 +1,33 @@
+# Copy to ~/.gitconfig and fill in your details.
+# Machine-specific overrides go in ~/.gitconfig.local
+
+[user]
+	email = you@example.com
+	name = Your Name
+[alias]
+	graph=log --graph --oneline --decorate=full
+[core]
+	excludesfile = ~/.gitignore_global
+[include]
+	path = ~/.gitconfig.local
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+
+[core]
+    pager = delta
+
+[interactive]
+    diffFilter = delta --color-only
+
+[delta]
+    navigate = true
+    side-by-side = true
+
+[merge]
+    conflictstyle = diff3
+
+[diff]
+    colorMoved = default

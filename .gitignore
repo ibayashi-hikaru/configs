@@ -5,3 +5,7 @@
 # Local-only overrides (keep per machine)
 myShellConfig.sh
 _zshrc-e
+
+# Sensitive configs (use *.example as templates)
+ssh_config
+_gitconfig
